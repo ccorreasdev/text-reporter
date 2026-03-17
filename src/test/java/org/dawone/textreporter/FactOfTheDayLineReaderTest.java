@@ -17,6 +17,23 @@ class FactOfTheDayLineReaderTest {
     }
 
     @Test
+    void readLines_SiEsHoy_DevuelveCadena() {
+        String apiEndpoint = "https://uselessfacts.jsph.pl//api/v2/facts/today";
+        FactOfTheDayLineReader reader = new FactOfTheDayLineReader(apiEndpoint);
+        String[] lineasLeidas = reader.readLines();
+        int tamanyoCadena = lineasLeidas.length;
+        int tamanyoMinimo = 1;
+        boolean expected = true;
+        boolean actual = false;
+
+        if(tamanyoCadena >= tamanyoMinimo){
+            actual = true;
+        }
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void readLines_SiNoHayEndPoint_DevuelveExcepcion() {
         String apiEndpoint = "";
         FactOfTheDayLineReader reader = new FactOfTheDayLineReader(apiEndpoint);

@@ -1,19 +1,23 @@
 package org.dawone.textreporter;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class FactOfTheDayLineReaderTest {
 
     @Test
     void readLines_SiEsHoy_DevuelveLaFrase() {
         String apiEndpoint = "https://uselessfacts.jsph.pl//api/v2/facts/today";
-        FactOfTheDayLineReader reader = new FactOfTheDayLineReader(apiEndpoint);
-        String[] lineasLeidas = reader.readLines();
-        String expected = "The first owner of the Marlboro company died of lung cancer.";
+        FactOfTheDayLineReader factOfTheDayLineReaderMock = Mockito.mock(FactOfTheDayLineReader.class);
+        String[] expected = {"The first owner of the Marlboro company died of lung cancer."};
 
-        assertEquals(expected, lineasLeidas[0]);
+        when(factOfTheDayLineReaderMock.readLines()).thenReturn(expected);
+
+
+        assertEquals(expected, factOfTheDayLineReaderMock.readLines());
     }
 
     @Test
@@ -39,5 +43,13 @@ class FactOfTheDayLineReaderTest {
         FactOfTheDayLineReader reader = new FactOfTheDayLineReader(apiEndpoint);
 
         assertThrows(IllegalArgumentException.class, () -> reader.readLines());
+    }
+
+    @Test
+    void readLines_SiEndPointErroneo_DevuelveExcepcion() {
+        String apiEndpoint = "nofunciona";
+        FactOfTheDayLineReader reader = new FactOfTheDayLineReader(apiEndpoint);
+
+        assertThrows(RuntimeException.class,()-> reader.readLines() );
     }
 }

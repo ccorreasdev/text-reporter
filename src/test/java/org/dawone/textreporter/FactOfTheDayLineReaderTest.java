@@ -16,7 +16,6 @@ class FactOfTheDayLineReaderTest {
 
         when(factOfTheDayLineReaderMock.readLines()).thenReturn(expected);
 
-
         assertEquals(expected, factOfTheDayLineReaderMock.readLines());
     }
 
